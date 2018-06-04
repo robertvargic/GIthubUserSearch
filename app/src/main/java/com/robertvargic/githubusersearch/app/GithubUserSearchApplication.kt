@@ -1,21 +1,21 @@
-package com.robertvargic.githubusersearch.util
+package com.robertvargic.githubusersearch.app
 
 import android.app.Application
 import android.content.Context
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.networking.RetrofitUtil
-import retrofit2.Retrofit
-import kotlin.coroutines.experimental.coroutineContext
 
 class GithubUserSearchApplication : Application() {
 
+    lateinit var userDatabase: UserRoomDatabase
+
+//    constructor(context: Context) : this() {
+//       userDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
+//    }
 
     override fun onCreate() {
         super.onCreate()
+        userDatabase = UserRoomDatabase.getDatabaseInstance(baseContext)!!
     }
 
-    companion object {
-        val retrofit: Retrofit = RetrofitUtil.createRetrofit()
-        val userDatabase: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance()!!
-    }
+    companion object : SingletonHolder<GithubUserSearchApplication, Context>({ GithubUserSearchApplication() })
 }

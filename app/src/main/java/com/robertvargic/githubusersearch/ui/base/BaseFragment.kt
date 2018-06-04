@@ -1,4 +1,4 @@
-package com.robertvargic.cryptochecker.ui.base
+package com.robertvargic.githubusersearch.ui.base
 
 import android.support.v4.app.Fragment
 

@@ -1,4 +1,4 @@
-package com.robertvargic.cryptochecker.ui.base
+package com.robertvargic.githubusersearch.ui.base
 
 interface BasePresenter {
     fun start()

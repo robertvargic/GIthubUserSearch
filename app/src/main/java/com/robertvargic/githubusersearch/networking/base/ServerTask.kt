@@ -1,4 +1,5 @@
 package com.robertvargic.githubusersearch.networking.base
 
-class ServerTask {
+interface ServerTask<R> {
+    fun execute(listener: TaskListener<R>)
 }

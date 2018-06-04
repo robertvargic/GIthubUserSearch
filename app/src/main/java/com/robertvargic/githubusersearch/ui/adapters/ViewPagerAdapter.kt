@@ -1,4 +1,4 @@
-package com.robertvargic.githubusersearch.ui.bottomnavigation
+package com.robertvargic.githubusersearch.ui.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
