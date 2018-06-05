@@ -1,5 +1,6 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.ui.adapters.OnSearchUserClickListener
 import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
+import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
+import com.robertvargic.githubusersearch.util.Constants
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
 class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
@@ -45,6 +48,13 @@ class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
 
     override fun initListView(userList: MutableList<User>) {
         val listener = object : OnSearchUserClickListener {
+            override fun onClick(userName: String) {
+                var intent: Intent = Intent()
+                intent.setClass(context, UserDetailActivity::class.java)
+                intent.putExtra(Constants.USERNAME, userName)
+                startActivity(intent)
+            }
+
             override fun onFavouriteClick(user: User) {
                 saveFavouriteUser(user)
             }

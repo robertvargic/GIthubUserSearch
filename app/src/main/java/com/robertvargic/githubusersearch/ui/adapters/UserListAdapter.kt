@@ -30,10 +30,12 @@ class UserListAdapter(private val items: MutableList<User>, private val context:
             if (listener != null) {
                 itemView.favouriteButton.setOnClickListener({ view -> listener.onFavouriteClick(user) })
             }
+            itemView.setOnClickListener({view -> listener!!.onClick(user.userName) })
         }
     }
 }
 
 public interface OnSearchUserClickListener {
     fun onFavouriteClick(user: User)
+    fun onClick(userName: String)
 }
