@@ -12,6 +12,7 @@ interface UserListSearchContract {
         fun showProgress()
         fun hideProgress()
         fun initListView(userList: MutableList<User>)
+        fun saveFavouriteUser(user: User)
     }
 
     interface Presenter : BasePresenter {

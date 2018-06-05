@@ -13,7 +13,7 @@ interface UserDao {
     fun insert(user: User)
 
     @Query("Select * from userTable")
-    fun getAllUsers() : List<User>
+    fun getAllUsers() : MutableList<User>
 
     @Query("DELETE from userTable WHERE id = :userId")
     fun deleteUser(userId: String)

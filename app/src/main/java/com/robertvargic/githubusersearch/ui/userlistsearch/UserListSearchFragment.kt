@@ -5,13 +5,23 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.robertvargic.githubusersearch.R
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.ui.adapters.OnSearchUserClickListener
 import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
 class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
+
+    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
+
+    override fun saveFavouriteUser(user: User) {
+        println(Toast.makeText(context, "User favourited", Toast.LENGTH_LONG).show())
+        database.userDao().insert(user)
+    }
 
     private lateinit var userListSearchPresenter: UserListSearchContract.Presenter
 
@@ -31,10 +41,21 @@ class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
+
     override fun initListView(userList: MutableList<User>) {
-        val currencyListAdapter = UserListAdapter(userList, context)
+        val listener = object : OnSearchUserClickListener {
+            override fun onFavouriteClick(user: User) {
+                saveFavouriteUser(user)
+            }
+        }
+        val currencyListAdapter = UserListAdapter(userList, context, listener)
         recycleView.adapter = currencyListAdapter
         recycleView.adapter.notifyDataSetChanged()
+
+//        var itemTouchHelper = ItemTouchHelper(SwipeController())
+//        itemTouchHelper.attachToRecyclerView(recycleView)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +69,7 @@ class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycleView.layoutManager = LinearLayoutManager(context)
+        recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         init()
         initEmptyState()
 

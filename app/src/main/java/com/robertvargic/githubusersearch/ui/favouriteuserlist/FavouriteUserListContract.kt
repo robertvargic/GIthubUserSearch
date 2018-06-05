@@ -9,7 +9,7 @@ interface FavouriteUserListContract {
 
     interface View : BaseView<Presenter> {
         fun initEmptyState()
-        fun initListView(userList: List<User>)
+        fun initListView(userList: MutableList<User>)
     }
 
     interface Presenter : BasePresenter {

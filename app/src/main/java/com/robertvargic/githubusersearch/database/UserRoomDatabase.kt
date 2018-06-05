@@ -19,6 +19,7 @@ abstract class UserRoomDatabase : RoomDatabase() {
                 synchronized(UserRoomDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context!!.applicationContext,
                             UserRoomDatabase::class.java, "user.db")
+                            .allowMainThreadQueries()
                             .build()
                 }
             }

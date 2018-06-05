@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
@@ -19,15 +20,15 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initListView(userList: List<User>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun initListView(userList: MutableList<User>) {
+        val currencyListAdapter = UserListAdapter(userList, context, null)
+        recycleView.adapter = currencyListAdapter
+        recycleView.adapter.notifyDataSetChanged()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setPresenter(FavouriteUserListPresenter(this))
-        favouriteUserListPresenter.getUsersFromDatabase(UserRoomDatabase.getDatabaseInstance(context))
-
 //        favouriteUserListPresenter.getUsersFromDatabase(context?.let { GithubUserSearchApplication.getInstance(it).userDatabase })
     }
 
@@ -38,6 +39,7 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycleView.layoutManager = LinearLayoutManager(context)
+        favouriteUserListPresenter.getUsersFromDatabase(UserRoomDatabase.getDatabaseInstance(context))
     }
 
     override fun setPresenter(presenter: FavouriteUserListContract.Presenter) {

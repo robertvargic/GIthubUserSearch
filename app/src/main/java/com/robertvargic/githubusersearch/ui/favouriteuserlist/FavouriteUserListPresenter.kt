@@ -9,7 +9,7 @@ class FavouriteUserListPresenter(var favouriteUserView: FavouriteUserListContrac
 
     override fun getUsersFromDatabase(userDatabase: UserRoomDatabase?) {
         userDao = userDatabase!!.userDao()
-//        favouriteUserView.initListView(userDao.getAllUsers())
+        favouriteUserView.initListView(userDao.getAllUsers())
     }
 
     override fun start() {
