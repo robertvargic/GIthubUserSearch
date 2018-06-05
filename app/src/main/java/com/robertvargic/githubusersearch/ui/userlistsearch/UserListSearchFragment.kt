@@ -17,7 +17,7 @@ import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
-class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
+class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
     var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
 
@@ -45,11 +45,10 @@ class UserListSearchFragment: BaseFragment(), UserListSearchContract.View {
     }
 
 
-
     override fun initListView(userList: MutableList<User>) {
         val listener = object : OnSearchUserClickListener {
             override fun onClick(userName: String) {
-                var intent: Intent = Intent()
+                var intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
                 intent.putExtra(Constants.USERNAME, userName)
                 startActivity(intent)
