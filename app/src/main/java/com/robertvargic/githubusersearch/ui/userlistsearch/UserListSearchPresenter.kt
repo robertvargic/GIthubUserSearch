@@ -1,11 +1,21 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.SearchResponse
+import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.SearchForUserTask
 
 class UserListSearchPresenter(private var userListSearchView: UserListSearchContract.View) : UserListSearchContract.Presenter {
+
+    lateinit var database: UserRoomDatabase
+
+    override fun saveUserToDatabase(user: User, database: UserRoomDatabase) {
+        this.database = database
+        database.userDao().insert(user)
+//        saveUserReposToDatabase(user)
+    }
 
     override fun start() {
 
@@ -37,4 +47,23 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
         })
     }
+
+//    private fun saveUserReposToDatabase(user: User) {
+//        val getUserReposTask = GetUserReposTask(RetrofitUtil.createRetrofit(), user.userName)
+//
+//        getUserReposTask.execute(object : TaskListener<MutableList<Repository>> {
+//            override fun onPreExecute() {
+//
+//            }
+//
+//            override fun onSucess(result: MutableList<Repository>) {
+//                database.userDao().insert(result)
+//            }
+//
+//            override fun onError(error: Throwable) {
+//
+//            }
+//
+//        })
+//    }
 }

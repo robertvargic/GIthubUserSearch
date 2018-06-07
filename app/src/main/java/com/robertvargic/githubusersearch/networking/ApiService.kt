@@ -1,5 +1,6 @@
 package com.robertvargic.githubusersearch.networking
 
+import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.SearchResponse
 import com.robertvargic.githubusersearch.model.User
 import retrofit2.Call
@@ -14,4 +15,7 @@ interface ApiService {
 
     @GET("/users/{user}")
     fun getUser(@Path("user") username: String): Call<User>
+
+    @GET("/users/{user}/repos")
+    fun getUserRepos(@Path("user")username: String): Call<ArrayList<Repository>>
 }

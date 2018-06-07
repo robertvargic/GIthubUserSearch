@@ -8,3 +8,4 @@ import android.arch.persistence.room.PrimaryKey
 data class User(@PrimaryKey @ColumnInfo(name = "id") val id: String,
                 @Json("login") @ColumnInfo (name = "userName") var userName: String) {
 }
+

@@ -20,13 +20,12 @@ import kotlinx.android.synthetic.main.fragment_user_list_search.*
 class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
     var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
+    private lateinit var userListSearchPresenter: UserListSearchContract.Presenter
 
     override fun saveFavouriteUser(user: User) {
         println(Toast.makeText(context, "User favourited", Toast.LENGTH_LONG).show())
-        database.userDao().insert(user)
+        userListSearchPresenter.saveUserToDatabase(user, database)
     }
-
-    private lateinit var userListSearchPresenter: UserListSearchContract.Presenter
 
     override fun initEmptyState() {
 
@@ -43,7 +42,6 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
     override fun hideProgress() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 
     override fun initListView(userList: MutableList<User>) {
         val listener = object : OnSearchUserClickListener {

@@ -4,9 +4,10 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.User
 
-@Database(entities = arrayOf(User::class), version = 1)
+@Database(entities = arrayOf(User::class, Repository::class), version = 1)
 abstract class UserRoomDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
