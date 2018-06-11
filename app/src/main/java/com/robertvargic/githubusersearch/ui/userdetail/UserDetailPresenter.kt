@@ -16,7 +16,8 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
 
     override fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?) {
         userDao = userDatabase!!.userDao()
-        userListSearchView.initUserInfo(userDao.getUser(userId))
+        val user: User = userDao.getUser(userId)
+        userListSearchView.initUserInfo(user)
 
     }
 

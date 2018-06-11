@@ -26,10 +26,10 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
 
     override fun initListView(userList: MutableList<User>) {
         val listener = object : OnUserListItemClickListener {
-            override fun onClick(userName: String) {
+            override fun onClick(userId: String) {
                 var intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
-                intent.putExtra(Constants.DATABASE_USERNAME, userName)
+                intent.putExtra(Constants.DATABASE_USERNAME, userId)
                 startActivity(intent)
             }
 

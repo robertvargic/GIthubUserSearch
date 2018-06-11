@@ -30,7 +30,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
     }
 
     override fun initUserInfo(user: User) {
-        userNameTextField.text = user.name
+        userNameTextField.text = user.userName
     }
 
     override fun initRepoInfo(repoList: List<Repository>) {
@@ -43,14 +43,12 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
         val intent = intent
 
-        if (intent.getStringArrayExtra(Constants.USERNAME) != null) {
+        if (intent.getStringExtra(Constants.USERNAME) != null) {
             userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(Constants.USERNAME))
         }
 
-        if (intent.getStringArrayExtra(Constants.DATABASE_USERNAME) != null) {
+        if (intent.getStringExtra(Constants.DATABASE_USERNAME) != null) {
             userDetailPresenter.loadUserDetailsFromDatabase(intent.getStringExtra(Constants.DATABASE_USERNAME), database)
         }
-
-
     }
 }
