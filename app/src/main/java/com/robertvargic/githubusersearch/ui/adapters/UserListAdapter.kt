@@ -26,7 +26,8 @@ class UserListAdapter(private val items: MutableList<User>, private val context:
 
     class ViewHolder(view: View, private val listener: OnSearchUserClickListener?) : RecyclerView.ViewHolder(view) {
         fun bindData(user: User) {
-            itemView.userName.text = user.userName
+            itemView.userName.text = user.name
+            itemView.numberOfRepos.text = user.numberOfPublicRepos
             if (listener != null) {
                 itemView.favouriteButton.setOnClickListener({ view -> listener.onFavouriteClick(user) })
             }

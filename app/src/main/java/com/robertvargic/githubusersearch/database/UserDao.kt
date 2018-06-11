@@ -25,6 +25,8 @@ interface UserDao {
     @Insert
     fun insert(repositoryList: MutableList<Repository>)
 
-//    @Query("SELECT * from repository WHERE owner = :userId")
-//    fun getRepoList(userId: String): MutableList<Repository>
+    @Query("SELECT * from repositoryTable WHERE userId = :userId")
+    fun getRepoListByUserId(userId: String): MutableList<Repository>
+
+
 }

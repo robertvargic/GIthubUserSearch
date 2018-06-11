@@ -26,7 +26,7 @@ class RepositoryListAdapter(private val items: List<Repository>, private val con
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindData(repository: Repository) {
-            itemView.repositoryName.text = repository.id
+            itemView.repositoryName.text = repository.name
         }
     }
 }
