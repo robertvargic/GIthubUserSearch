@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.model.User
-import kotlinx.android.synthetic.main.list_item_user.view.*
+import kotlinx.android.synthetic.main.list_item_favourite_user.view.*
 
-class UserListAdapter(private val items: MutableList<User>, private val context: Context?, private val onSearchUserClickListener: OnUserListItemClickListener?) :
-        RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+class FavouriteUserAdapter(private val items: MutableList<User>, private val context: Context?, private val onSearchUserClickListener: OnUserListItemClickListener?) :
+        RecyclerView.Adapter<FavouriteUserAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_user, parent, false), onSearchUserClickListener)
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_favourite_user, parent, false), onSearchUserClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -27,11 +27,8 @@ class UserListAdapter(private val items: MutableList<User>, private val context:
     class ViewHolder(view: View, private val listener: OnUserListItemClickListener?) : RecyclerView.ViewHolder(view) {
         fun bindData(user: User) {
             itemView.userName.text = user.userName
-//            itemView.numberOfRepos.text = user.numberOfPublicRepos
-            if (listener != null) {
-                itemView.favouriteButton.setOnClickListener({ view -> listener.onFavouriteClick(user) })
-            }
-            itemView.setOnClickListener({view -> listener!!.onClick(user.userName) })
+            itemView.numberOfRepos.text = user.numberOfPublicRepos
+            itemView.setOnClickListener({ view -> listener!!.onClick(user.userName) })
         }
     }
 }

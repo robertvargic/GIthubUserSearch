@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.User
-import com.robertvargic.githubusersearch.ui.adapters.OnSearchUserClickListener
-import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
+import com.robertvargic.githubusersearch.ui.adapters.FavouriteUserAdapter
+import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
@@ -25,11 +25,11 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
     }
 
     override fun initListView(userList: MutableList<User>) {
-        val listener = object : OnSearchUserClickListener {
+        val listener = object : OnUserListItemClickListener {
             override fun onClick(userName: String) {
                 var intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
-                intent.putExtra(Constants.USERNAME, userName)
+                intent.putExtra(Constants.DATABASE_USERNAME, userName)
                 startActivity(intent)
             }
 
@@ -37,7 +37,7 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
                 //nothing
             }
         }
-        val currencyListAdapter = UserListAdapter(userList, context, listener)
+        val currencyListAdapter = FavouriteUserAdapter(userList, context, listener)
         recycleView.adapter = currencyListAdapter
         recycleView.adapter.notifyDataSetChanged()
     }

@@ -19,6 +19,9 @@ interface UserDao {
     @Query("DELETE from userTable WHERE id = :userId")
     fun deleteUser(userId: String)
 
+    @Query("SELECT * from userTable WHERE id = :userId")
+    fun getUser(userId: String): User
+
     @Delete
     fun delete(user: User)
 

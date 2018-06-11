@@ -3,6 +3,7 @@ package com.robertvargic.githubusersearch.ui.userdetail
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.robertvargic.githubusersearch.R
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.ui.adapters.RepositoryListAdapter
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_user_detail.*
 class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
     private lateinit var userDetailPresenter: UserDetailContract.Presenter
+    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(this)!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +30,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
     }
 
     override fun initUserInfo(user: User) {
-        userNameTextField.text = user.userName
+        userNameTextField.text = user.name
     }
 
     override fun initRepoInfo(repoList: List<Repository>) {
@@ -37,6 +40,17 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
     }
 
     private fun checkIntent() {
-        userDetailPresenter.loadUserDetails(intent.getStringExtra(Constants.USERNAME))
+
+        val intent = intent
+
+        if (intent.getStringArrayExtra(Constants.USERNAME) != null) {
+            userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(Constants.USERNAME))
+        }
+
+        if (intent.getStringArrayExtra(Constants.DATABASE_USERNAME) != null) {
+            userDetailPresenter.loadUserDetailsFromDatabase(intent.getStringExtra(Constants.DATABASE_USERNAME), database)
+        }
+
+
     }
 }

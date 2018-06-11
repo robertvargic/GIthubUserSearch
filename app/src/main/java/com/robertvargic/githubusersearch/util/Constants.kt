@@ -6,5 +6,6 @@ open class Constants {
         const val FAVOURITE_USERS_FRAGMENT: String = "FavouriteUsersFragment"
         const val DELETE_DATABASE_FRAGMENT: String = "DeleteDatabaseFragment"
         const val USERNAME: String = "username"
+        const val DATABASE_USERNAME: String = "databaseUsername"
     }
 }

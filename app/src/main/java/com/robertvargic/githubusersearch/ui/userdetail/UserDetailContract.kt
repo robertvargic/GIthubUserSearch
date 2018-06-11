@@ -1,5 +1,6 @@
 package com.robertvargic.githubusersearch.ui.userdetail
 
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.ui.base.BasePresenter
@@ -13,6 +14,7 @@ interface UserDetailContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadUserDetails(userId: String)
+        fun loadUserDetailsFromWeb(userId: String)
+        fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?)
     }
 }

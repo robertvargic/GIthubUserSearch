@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.User
-import com.robertvargic.githubusersearch.ui.adapters.OnSearchUserClickListener
+import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
@@ -44,7 +44,7 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
     }
 
     override fun initListView(userList: MutableList<User>) {
-        val listener = object : OnSearchUserClickListener {
+        val listener = object : OnUserListItemClickListener {
             override fun onClick(userName: String) {
                 var intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
