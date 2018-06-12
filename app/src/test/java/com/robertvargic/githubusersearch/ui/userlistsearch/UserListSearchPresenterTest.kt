@@ -11,7 +11,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class UserSearchPresenterTest {
+class UserListSearchPresenterTest {
     lateinit var presenter: UserListSearchPresenter
 
     @Mock
