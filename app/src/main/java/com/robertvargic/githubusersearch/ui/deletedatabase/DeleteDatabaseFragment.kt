@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.robertvargic.githubusersearch.R
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_delete_database.*
 
 class DeleteDatabaseFragment : BaseFragment(), DeleteDatabaseContract.View {
+
+    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
 
     override fun showToast() {
         Toast.makeText(context, "All favourite users deleted", Toast.LENGTH_LONG).show()
@@ -28,7 +31,7 @@ class DeleteDatabaseFragment : BaseFragment(), DeleteDatabaseContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        deleteButton.setOnClickListener { deleteDatabasePresenter }
+        deleteButton.setOnClickListener { deleteDatabasePresenter.deleteDatabase(database) }
     }
 
     override fun setPresenter(presenter: DeleteDatabaseContract.Presenter) {
