@@ -1,5 +1,6 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
+import android.util.Log
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.SearchResponse
@@ -9,6 +10,8 @@ import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
 import com.robertvargic.githubusersearch.networking.tasks.SearchForUserTask
+
+
 
 class UserListSearchPresenter(private var userListSearchView: UserListSearchContract.View) : UserListSearchContract.Presenter {
 
@@ -56,6 +59,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
 
             override fun onError(error: Throwable) {
+                Log.e("error", error.localizedMessage)
             }
         })
     }
@@ -84,4 +88,6 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
 
         })
     }
+
+
 }

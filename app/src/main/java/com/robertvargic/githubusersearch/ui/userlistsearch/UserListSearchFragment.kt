@@ -1,6 +1,8 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -87,6 +89,19 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
     }
 
     fun init() {
-        searchButton.setOnClickListener { userListSearchPresenter.searchForUser(searchEditText.text.toString()) }
+        searchButton.setOnClickListener {
+            if (isNetworkConnected()) {
+                userListSearchPresenter.searchForUser(searchEditText.text.toString())
+            } else {
+                println(Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show())
+            }
+        }
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo != null
     }
 }
+
+

@@ -1,5 +1,6 @@
 package com.robertvargic.githubusersearch.networking.tasks
 
+import android.util.Log
 import com.robertvargic.githubusersearch.model.SearchResponse
 import com.robertvargic.githubusersearch.networking.base.BaseTask
 import com.robertvargic.githubusersearch.networking.base.ServerTask
@@ -14,6 +15,7 @@ class SearchForUserTask(retrofit: Retrofit, private val searchString: String) : 
         call.enqueue(object : Callback<SearchResponse> {
             override fun onFailure(call: Call<SearchResponse>?, t: Throwable?) {
                 t?.run { listener.onError(this) }
+                Log.e("error", t.toString())
             }
 
             override fun onResponse(call: Call<SearchResponse>?, response: Response<SearchResponse>?) {
