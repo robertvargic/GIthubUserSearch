@@ -10,7 +10,7 @@ import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
 import com.robertvargic.githubusersearch.networking.tasks.SearchForUserTask
-
+import kotlinx.coroutines.experimental.async
 
 
 class UserListSearchPresenter(private var userListSearchView: UserListSearchContract.View) : UserListSearchContract.Presenter {
@@ -54,7 +54,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
 
             override fun onSucess(result: User) {
-                database.userDao().insert(result)
+                async {database.userDao().insert(result)}
                 saveUserReposToDatabase(result)
             }
 
@@ -79,7 +79,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
                     repository.userId = user.id
                 }
 
-                database.userDao().insert(repositoriesResult)
+                async {database.userDao().insert(repositoriesResult)}
             }
 
             override fun onError(error: Throwable) {

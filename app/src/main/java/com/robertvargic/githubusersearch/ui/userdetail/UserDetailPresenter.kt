@@ -9,6 +9,7 @@ import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
+import kotlinx.coroutines.experimental.async
 
 class UserDetailPresenter(private var userListSearchView: UserDetailContract.View) : UserDetailContract.Presenter {
 
@@ -45,11 +46,13 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
     }
 
     override fun saveUserToDatabase(database: UserRoomDatabase) {
-        database.userDao().insert(user)
-        for (repository in userRepoList) {
-            repository.userId = user.id
+        async {
+            database.userDao().insert(user)
+            for (repository in userRepoList) {
+                repository.userId = user.id
+            }
+            database.userDao().insert(userRepoList)
         }
-        database.userDao().insert(userRepoList)
     }
 
     private fun loadUserRepos(userId: String) {

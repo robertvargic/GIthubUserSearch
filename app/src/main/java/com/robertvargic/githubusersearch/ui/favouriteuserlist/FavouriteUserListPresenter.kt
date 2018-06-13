@@ -2,6 +2,7 @@ package com.robertvargic.githubusersearch.ui.favouriteuserlist
 
 import com.robertvargic.githubusersearch.database.UserDao
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
+import kotlinx.coroutines.experimental.async
 
 class FavouriteUserListPresenter(var favouriteUserView: FavouriteUserListContract.View) : FavouriteUserListContract.Presenter {
 
@@ -9,7 +10,7 @@ class FavouriteUserListPresenter(var favouriteUserView: FavouriteUserListContrac
 
     override fun getUsersFromDatabase(userDatabase: UserRoomDatabase?) {
         userDao = userDatabase!!.userDao()
-        favouriteUserView.initListView(userDao.getAllUsers())
+        async {favouriteUserView.initListView(userDao.getAllUsers())}
     }
 
     override fun start() {
