@@ -13,6 +13,8 @@ import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
 class UserDetailPresenter(private var userListSearchView: UserDetailContract.View) : UserDetailContract.Presenter {
 
     private lateinit var userDao: UserDao
+    private lateinit var user: User
+    private lateinit var userRepoList: MutableList<Repository>
 
     override fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?) {
         userDao = userDatabase!!.userDao()
@@ -32,13 +34,22 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
             }
 
             override fun onSucess(result: User) {
-                userListSearchView.initUserInfo(result)
-                loadUserRepos(userId)
+                user = result
+                userListSearchView.initUserInfo(user)
+                loadUserRepos(user.userName)
             }
 
             override fun onError(error: Throwable) {
             }
         })
+    }
+
+    override fun saveUserToDatabase(database: UserRoomDatabase) {
+        database.userDao().insert(user)
+        for (repository in userRepoList) {
+            repository.userId = user.id
+        }
+        database.userDao().insert(userRepoList)
     }
 
     private fun loadUserRepos(userId: String) {
@@ -50,9 +61,8 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
             }
 
             override fun onSucess(result: ArrayList<Repository>) {
-                Log.e("Get User Repo list: ", "Sucess")
-                Log.e("Result: ", result.toString())
-                userListSearchView.initRepoInfo(result)
+                userRepoList = result
+                userListSearchView.initRepoInfo(userRepoList)
             }
 
             override fun onError(error: Throwable) {

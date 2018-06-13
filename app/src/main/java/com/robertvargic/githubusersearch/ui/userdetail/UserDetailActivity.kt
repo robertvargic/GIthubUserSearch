@@ -2,6 +2,8 @@ package com.robertvargic.githubusersearch.ui.userdetail
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.Toast
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.Repository
@@ -44,6 +46,11 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
         val intent = intent
 
         if (intent.getStringExtra(Constants.USERNAME) != null) {
+            favouriteButton.visibility = View.VISIBLE
+            favouriteButton.setOnClickListener({
+                userDetailPresenter.saveUserToDatabase(database)
+                println(Toast.makeText(this, "User favourited", Toast.LENGTH_LONG).show())
+            })
             userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(Constants.USERNAME))
         }
 

@@ -16,5 +16,6 @@ interface UserDetailContract {
     interface Presenter : BasePresenter {
         fun loadUserDetailsFromWeb(userId: String)
         fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?)
+        fun saveUserToDatabase(database: UserRoomDatabase)
     }
 }
