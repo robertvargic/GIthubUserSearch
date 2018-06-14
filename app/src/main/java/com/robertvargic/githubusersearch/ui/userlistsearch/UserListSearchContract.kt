@@ -8,8 +8,7 @@ import com.robertvargic.githubusersearch.ui.base.BaseView
 interface UserListSearchContract {
 
     interface View : BaseView<Presenter> {
-        fun initEmptyState()
-        fun initNoResultState()
+        fun initResultState(message: String)
         fun showProgress()
         fun hideProgress()
         fun initListView(userList: MutableList<User>)

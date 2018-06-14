@@ -24,25 +24,43 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
     var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
     private lateinit var userListSearchPresenter: UserListSearchContract.Presenter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setPresenter(UserListSearchPresenter(this))
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_user_list_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        init()
+        initResultState("Enter name you want to search and press search button")
+
+    }
+
     override fun saveFavouriteUser(user: User) {
         println(Toast.makeText(context, "User favourited", Toast.LENGTH_LONG).show())
         userListSearchPresenter.saveUserToDatabase(user, database)
     }
 
-    override fun initEmptyState() {
-
-    }
-
-    override fun initNoResultState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun initResultState(message: String) {
+        if (message == "") {
+            listStateTextView.visibility = View.GONE
+        } else {
+            listStateTextView.visibility = View.VISIBLE
+            listStateTextView.text = message
+        }
     }
 
     override fun showProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBar.visibility = View.GONE
     }
 
     override fun initListView(userList: MutableList<User>) {
@@ -64,23 +82,6 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
 //        var itemTouchHelper = ItemTouchHelper(SwipeController())
 //        itemTouchHelper.attachToRecyclerView(recycleView)
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setPresenter(UserListSearchPresenter(this))
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_user_list_search, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        init()
-        initEmptyState()
 
     }
 

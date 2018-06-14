@@ -33,15 +33,16 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
         searchForUserTask.execute(object : TaskListener<SearchResponse> {
 
             override fun onPreExecute() {
-//                userListSearchView.showProgress()
+                userListSearchView.showProgress()
             }
 
             override fun onSucess(result: SearchResponse) {
-                userListSearchView.initListView(result.items)
+                userListSearchView.hideProgress()
+                checkListSizeAndInit(result.items)
             }
 
             override fun onError(error: Throwable) {
-//                userListSearchView.initNoResultState()
+                userListSearchView.hideProgress()
             }
         })
     }
@@ -51,6 +52,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
 
         getUserTask.execute(object : TaskListener<User> {
             override fun onPreExecute() {
+
             }
 
             override fun onSucess(result: User) {
@@ -59,6 +61,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
 
             override fun onError(error: Throwable) {
+
                 Log.e("error", error.localizedMessage)
             }
         })
@@ -89,5 +92,13 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
         })
     }
 
-
+    fun checkListSizeAndInit(userList: MutableList<User>) {
+        if (userList.size == 0) {
+            userListSearchView.initResultState("No results")
+            userListSearchView.initListView(userList)
+        } else {
+            userListSearchView.initResultState("")
+            userListSearchView.initListView(userList)
+        }
+    }
 }
