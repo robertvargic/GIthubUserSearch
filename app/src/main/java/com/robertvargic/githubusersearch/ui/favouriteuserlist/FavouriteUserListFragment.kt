@@ -2,6 +2,7 @@ package com.robertvargic.githubusersearch.ui.favouriteuserlist
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,12 @@ import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
 import kotlinx.android.synthetic.main.fragment_favourite_user_list.*
 
-class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View {
+class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View, SwipeRefreshLayout.OnRefreshListener {
+
+    override fun onRefresh() {
+        favouriteUserListPresenter.getUsersFromDatabase(UserRoomDatabase.getDatabaseInstance(context))
+        swipeRefresh.isRefreshing = false
+    }
 
     private lateinit var favouriteUserListPresenter: FavouriteUserListContract.Presenter
 
@@ -58,6 +64,7 @@ class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        swipeRefresh.setOnRefreshListener(this)
         recycleView.layoutManager = LinearLayoutManager(context)
         favouriteUserListPresenter.getUsersFromDatabase(UserRoomDatabase.getDatabaseInstance(context))
     }
