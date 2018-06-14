@@ -8,7 +8,7 @@ import com.robertvargic.githubusersearch.ui.base.BaseView
 interface FavouriteUserListContract {
 
     interface View : BaseView<Presenter> {
-        fun initEmptyState()
+        fun initEmptyState(visible: Boolean)
         fun initListView(userList: MutableList<User>)
     }
 

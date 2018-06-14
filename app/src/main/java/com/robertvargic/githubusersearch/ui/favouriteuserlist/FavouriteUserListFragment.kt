@@ -14,14 +14,18 @@ import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
-import kotlinx.android.synthetic.main.fragment_user_list_search.*
+import kotlinx.android.synthetic.main.fragment_favourite_user_list.*
 
 class FavouriteUserListFragment: BaseFragment(), FavouriteUserListContract.View {
 
     private lateinit var favouriteUserListPresenter: FavouriteUserListContract.Presenter
 
-    override fun initEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun initEmptyState(visible: Boolean) {
+        if (visible) {
+            emptyStateTextView.visibility = View.VISIBLE
+        } else {
+            emptyStateTextView.visibility = View.GONE
+        }
     }
 
     override fun initListView(userList: MutableList<User>) {

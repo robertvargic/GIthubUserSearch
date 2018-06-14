@@ -10,10 +10,17 @@ class FavouriteUserListPresenter(var favouriteUserView: FavouriteUserListContrac
 
     override fun getUsersFromDatabase(userDatabase: UserRoomDatabase?) {
         userDao = userDatabase!!.userDao()
-        async {favouriteUserView.initListView(userDao.getAllUsers())}
+        async {
+            var userList = userDao.getAllUsers()
+            if (userList.size == 0) {
+                favouriteUserView.initEmptyState(true)
+            } else {
+                favouriteUserView.initEmptyState(false)
+                favouriteUserView.initListView(userList)
+            }
+        }
     }
 
     override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
