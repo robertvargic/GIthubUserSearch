@@ -7,7 +7,7 @@ import com.robertvargic.githubusersearch.networking.base.ServerTask
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import retrofit2.*
 
-class GetUserReposTask(retrofit: Retrofit, private val userName: String) : BaseTask(retrofit), ServerTask<ArrayList<Repository>> {
+class GetUserReposTask(retrofit: Retrofit?, private val userName: String) : BaseTask(retrofit), ServerTask<ArrayList<Repository>> {
     override fun execute(listener: TaskListener<ArrayList<Repository>>) {
         listener.onPreExecute()
         val call = service.getUserRepos(userName)

@@ -14,6 +14,7 @@ class FavouriteUserListPresenter(var favouriteUserView: FavouriteUserListContrac
             var userList = userDao.getAllUsers()
             if (userList.size == 0) {
                 favouriteUserView.initEmptyState(true)
+                favouriteUserView.initListView(userList)
             } else {
                 favouriteUserView.initEmptyState(false)
                 favouriteUserView.initListView(userList)

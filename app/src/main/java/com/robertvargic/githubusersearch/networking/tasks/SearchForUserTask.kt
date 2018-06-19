@@ -7,7 +7,7 @@ import com.robertvargic.githubusersearch.networking.base.ServerTask
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import retrofit2.*
 
-class SearchForUserTask(retrofit: Retrofit, private val searchString: String) : BaseTask(retrofit), ServerTask<SearchResponse> {
+class SearchForUserTask(retrofit: Retrofit?, private val searchString: String) : BaseTask(retrofit), ServerTask<SearchResponse> {
     override fun execute(listener: TaskListener<SearchResponse>) {
         listener.onPreExecute()
         val call = service.searchUsers(searchString)

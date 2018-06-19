@@ -12,16 +12,20 @@ class RetrofitUtil {
     companion object {
 
         val BASE_URL = "https://api.github.com/"
+        var retrofit: Retrofit? = null
 
         private val DATE_JSON_SERIALIZER = JsonSerializer<Date> { src, typeOfSrc, context -> if (src == null) null else JsonPrimitive(src.time) }
         private val DATE_JSON_DESERIALIZER = JsonDeserializer<Date> { json, typeOfT, context -> if (json == null) null else Date(json.asLong) }
 
-        public fun createRetrofit(): Retrofit {
-            return Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(getGson()))
-                    .client(okHttpClient())
-                    .build()
+        fun createRetrofit(): Retrofit? {
+            if (retrofit == null) {
+                retrofit = Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create(getGson()))
+                        .client(okHttpClient())
+                        .build()
+            }
+            return retrofit
         }
 
         private fun getGson(): Gson {

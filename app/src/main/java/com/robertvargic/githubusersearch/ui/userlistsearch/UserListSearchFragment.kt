@@ -5,9 +5,12 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
@@ -18,6 +21,8 @@ import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
+
+
 
 class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
@@ -97,6 +102,20 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
                 println(Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show())
             }
         }
+
+        searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (isNetworkConnected()) {
+                        userListSearchPresenter.searchForUser(searchEditText.text.toString())
+                    } else {
+                        println(Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show())
+                    }
+                    return true
+                }
+                return false
+            }
+        })
     }
 
     private fun isNetworkConnected(): Boolean {
