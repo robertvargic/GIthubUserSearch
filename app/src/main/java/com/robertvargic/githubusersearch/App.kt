@@ -1,10 +1,9 @@
-package com.robertvargic.githubusersearch.app
+package com.robertvargic.githubusersearch
 
 import android.app.Application
-import android.content.Context
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 
-class GithubUserSearchApplication : Application() {
+class App : Application() {
 
     lateinit var userDatabase: UserRoomDatabase
 
@@ -17,5 +16,4 @@ class GithubUserSearchApplication : Application() {
         userDatabase = UserRoomDatabase.getDatabaseInstance(baseContext)!!
     }
 
-    companion object : SingletonHolder<GithubUserSearchApplication, Context>({ GithubUserSearchApplication() })
 }
