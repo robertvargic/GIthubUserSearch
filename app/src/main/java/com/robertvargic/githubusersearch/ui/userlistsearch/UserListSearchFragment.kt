@@ -18,7 +18,7 @@ import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
-import com.robertvargic.githubusersearch.util.Constants
+import com.robertvargic.githubusersearch.util.USERNAME
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
 class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
@@ -73,7 +73,7 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
             override fun onClick(userName: String) {
                 val intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
-                intent.putExtra(Constants.USERNAME, userName)
+                intent.putExtra(USERNAME, userName)
                 startActivity(intent)
             }
 

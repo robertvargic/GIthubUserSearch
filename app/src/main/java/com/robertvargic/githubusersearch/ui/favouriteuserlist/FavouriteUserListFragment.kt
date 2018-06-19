@@ -14,7 +14,7 @@ import com.robertvargic.githubusersearch.ui.adapters.FavouriteUserAdapter
 import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
-import com.robertvargic.githubusersearch.util.Constants
+import com.robertvargic.githubusersearch.util.DATABASE_USERNAME
 import kotlinx.android.synthetic.main.fragment_favourite_user_list.*
 
 class FavouriteUserListFragment : BaseFragment(), FavouriteUserListContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -47,7 +47,7 @@ class FavouriteUserListFragment : BaseFragment(), FavouriteUserListContract.View
             override fun onClick(userId: String) {
                 val intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
-                intent.putExtra(Constants.DATABASE_USERNAME, userId)
+                intent.putExtra(DATABASE_USERNAME, userId)
                 startActivity(intent)
             }
 

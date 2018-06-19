@@ -10,7 +10,9 @@ import com.robertvargic.githubusersearch.ui.base.BaseActivity
 import com.robertvargic.githubusersearch.ui.deletedatabase.DeleteDatabaseFragment
 import com.robertvargic.githubusersearch.ui.favouriteuserlist.FavouriteUserListFragment
 import com.robertvargic.githubusersearch.ui.userlistsearch.UserListSearchFragment
-import com.robertvargic.githubusersearch.util.Constants
+import com.robertvargic.githubusersearch.util.DELETE_DATABASE_FRAGMENT
+import com.robertvargic.githubusersearch.util.FAVOURITE_USERS_FRAGMENT
+import com.robertvargic.githubusersearch.util.SEARCH_USER_FRAGMENT
 import kotlinx.android.synthetic.main.activity_bottom_navigation_bar.*
 
 class BottomNavigationBarActivity : BaseActivity() {
@@ -29,9 +31,9 @@ class BottomNavigationBarActivity : BaseActivity() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         var viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-        viewPagerAdapter.addFragment(searchFragment, Constants.SEARCH_USER_FRAGMENT)
-        viewPagerAdapter.addFragment(favouriteFragment, Constants.FAVOURITE_USERS_FRAGMENT)
-        viewPagerAdapter.addFragment(deleteFragment, Constants.DELETE_DATABASE_FRAGMENT)
+        viewPagerAdapter.addFragment(searchFragment, SEARCH_USER_FRAGMENT)
+        viewPagerAdapter.addFragment(favouriteFragment, FAVOURITE_USERS_FRAGMENT)
+        viewPagerAdapter.addFragment(deleteFragment, DELETE_DATABASE_FRAGMENT)
 
         viewPager.adapter = viewPagerAdapter
 

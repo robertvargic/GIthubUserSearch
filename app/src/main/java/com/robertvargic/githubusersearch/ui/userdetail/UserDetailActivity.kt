@@ -10,7 +10,8 @@ import com.robertvargic.githubusersearch.model.Repository
 import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.ui.adapters.RepositoryListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseActivity
-import com.robertvargic.githubusersearch.util.Constants
+import com.robertvargic.githubusersearch.util.DATABASE_USERNAME
+import com.robertvargic.githubusersearch.util.USERNAME
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
 class UserDetailActivity : BaseActivity(), UserDetailContract.View {
@@ -35,17 +36,17 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
         val intent = intent
 
-        if (intent.getStringExtra(Constants.USERNAME) != null) {
+        if (intent.getStringExtra(USERNAME) != null) {
             favouriteButton.visibility = View.VISIBLE
             favouriteButton.setOnClickListener({
                 userDetailPresenter.saveUserToDatabase(database)
                 Toast.makeText(this, getString(R.string.user_favourited_user_detail), Toast.LENGTH_LONG).show()
             })
-            userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(Constants.USERNAME))
+            userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(USERNAME))
         }
 
-        if (intent.getStringExtra(Constants.DATABASE_USERNAME) != null) {
-            userDetailPresenter.loadUserDetailsFromDatabase(intent.getStringExtra(Constants.DATABASE_USERNAME), database)
+        if (intent.getStringExtra(DATABASE_USERNAME) != null) {
+            userDetailPresenter.loadUserDetailsFromDatabase(intent.getStringExtra(DATABASE_USERNAME), database)
         }
     }
 
