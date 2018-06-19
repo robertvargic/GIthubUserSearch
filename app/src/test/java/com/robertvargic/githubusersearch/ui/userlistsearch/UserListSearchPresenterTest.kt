@@ -10,11 +10,15 @@ import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
 import com.robertvargic.githubusersearch.networking.tasks.SearchForUserTask
 import com.robertvargic.githubusersearch.ui.userlistsearch.UserListSearchContract
 import com.robertvargic.githubusersearch.ui.userlistsearch.UserListSearchPresenter
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+
+
 
 class UserListSearchPresenterTest {
     lateinit var presenter: UserListSearchPresenter
@@ -35,6 +39,9 @@ class UserListSearchPresenterTest {
     lateinit var listener: TaskListener<SearchResponse>
 
     @Mock
+    lateinit var userList: MutableList<User>
+
+    @Mock
     lateinit var userDetailListener: TaskListener<User>
 
     @Mock
@@ -45,7 +52,7 @@ class UserListSearchPresenterTest {
 
     @Mock
     lateinit var database: UserRoomDatabase
-
+    
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -53,19 +60,53 @@ class UserListSearchPresenterTest {
     }
 
     @Test
-    fun searchGithubRepos_noQuery() {
+    fun `search github repos no query`() {
         var searchQuery: String = ""
         presenter.searchForUser(searchQuery)
-        Mockito.verify(searchUserTask, Mockito.never()).execute(listener)
+        Mockito.verifyNoMoreInteractions(searchUserTask)
     }
 
     @Test
-    fun searchGithubRepos() {
+    fun `search github repos`() {
         var searchQuery: String = "some query"
         presenter.searchForUser(searchQuery)
         Mockito.verify(searchUserTask, Mockito.never()).execute(listener)
     }
 
+    @Test
+    fun `init result state`() {
+        verify(viewContract).initResultState("some string")
+//        verifyNoMoreInteractions(viewContract)
+    }
+
+    @Test
+    fun `init result state empty`() {
+        verify(viewContract).initResultState("")
+    }
+
+    @Test
+    fun `show progress`() {
+        verify(viewContract).showProgress()
+        verify(viewContract, Mockito.atLeastOnce())
+    }
+
+    @Test
+    fun `hide progress`() {
+        verify(viewContract).hideProgress()
+        verify(viewContract, Mockito.atLeastOnce())
+    }
+
+    @Test
+    fun `init list view`() {
+        verify(viewContract).initListView(userList)
+        verify(viewContract, Mockito.atLeastOnce()).hideProgress()
+        verifyNoMoreInteractions(viewContract)
+    }
+
+    @After
+    fun validate() {
+        validateMockitoUsage()
+    }
 //    @Test
 //    fun saveUserToDatabase() {
 //        presenter.saveUserToDatabase(user, database)
