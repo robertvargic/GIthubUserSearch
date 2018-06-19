@@ -11,21 +11,11 @@ import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
 import kotlinx.coroutines.experimental.async
 
-class UserDetailPresenter(private var userListSearchView: UserDetailContract.View) : UserDetailContract.Presenter {
+class UserDetailPresenter(private val userListSearchView: UserDetailContract.View) : UserDetailContract.Presenter {
 
     private lateinit var userDao: UserDao
     private lateinit var user: User
     private lateinit var userRepoList: MutableList<Repository>
-
-    override fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?) {
-        userDao = userDatabase!!.userDao()
-        async {
-            val user: User = userDao.getUser(userId)
-            val repositoryList = userDao.getRepoListByUserId(userId)
-            userListSearchView.initUserInfo(user)
-            userListSearchView.initRepoInfo(repositoryList)
-        }
-    }
 
     override fun loadUserDetailsFromWeb(userId: String) {
 
@@ -56,6 +46,16 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
         }
     }
 
+    override fun loadUserDetailsFromDatabase(userId: String, userDatabase: UserRoomDatabase?) {
+        userDao = userDatabase!!.userDao()
+        async {
+            val user: User = userDao.getUser(userId)
+            val repositoryList = userDao.getRepoListByUserId(userId)
+            userListSearchView.initUserInfo(user)
+            userListSearchView.initRepoInfo(repositoryList)
+        }
+    }
+
     private fun loadUserRepos(userId: String) {
         val getUserReposTask = GetUserReposTask(RetrofitUtil.createRetrofit(), userId)
 
@@ -77,6 +77,5 @@ class UserDetailPresenter(private var userListSearchView: UserDetailContract.Vie
     }
 
     override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

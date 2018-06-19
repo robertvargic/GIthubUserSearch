@@ -1,6 +1,40 @@
 <resources>
     <string name="app_name">Github User Search</string>
+
+
+    <!--bottom navigation strings-->
     <string name="title_search">Search</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_delete_database">Delete</string>
+
+
+    <!--fragment_favourite_user_list-->
+    <string name="no_favourites">No favourites</string>
+    <!--fragment_favourite_user_list-->
+
+
+    <!--fragment_delete_database-->
+    <string name="delete_data_from_database">Delete data from database</string>
+    <!--Toasts-->
+    <string name="users_deleted">All favourite users deleted</string>
+    <!--fragment_delete_database-->
+
+
+    <!--fragment_user_list_search-->
+    <string name="search">Search</string>
+    <!--fragment strings-->
+    <string name="result_state_start_search">Enter name you want to search and press search button</string>
+    <!--Toasts-->
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="user_favourited">User favourited</string>
+    <!--fragment_user_list_search-->
+
+
+    <!--activity_user_detail-->
+    <string name="favourite_button">Favourite</string>
+    <!--Toasts-->
+    <string name="user_favourited_user_detail">User favourited</string>
+    <!--activity_user_detail-->
+
+
 </resources>

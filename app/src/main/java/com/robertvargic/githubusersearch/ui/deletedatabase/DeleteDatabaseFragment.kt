@@ -14,10 +14,6 @@ class DeleteDatabaseFragment : BaseFragment(), DeleteDatabaseContract.View {
 
     var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
 
-    override fun showToast() {
-        Toast.makeText(context, "All favourite users deleted", Toast.LENGTH_LONG).show()
-    }
-
     private lateinit var deleteDatabasePresenter: DeleteDatabaseContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,5 +32,9 @@ class DeleteDatabaseFragment : BaseFragment(), DeleteDatabaseContract.View {
 
     override fun setPresenter(presenter: DeleteDatabaseContract.Presenter) {
         deleteDatabasePresenter = presenter
+    }
+
+    override fun showToast() {
+        Toast.makeText(context, getString(R.string.users_deleted), Toast.LENGTH_LONG).show()
     }
 }

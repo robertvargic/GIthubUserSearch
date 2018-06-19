@@ -17,15 +17,6 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
 
     lateinit var database: UserRoomDatabase
 
-    override fun saveUserToDatabase(user: User, database: UserRoomDatabase) {
-        this.database = database
-        saveDetailedUserInfoToDatabase(user.userName)
-    }
-
-    override fun start() {
-
-    }
-
     override fun searchForUser(searchQuery: String) {
 
         val searchForUserTask = SearchForUserTask(RetrofitUtil.createRetrofit(), searchQuery)
@@ -45,6 +36,21 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
                 userListSearchView.hideProgress()
             }
         })
+    }
+
+    fun checkListSizeAndInit(userList: MutableList<User>) {
+        if (userList.size == 0) {
+            userListSearchView.initResultState("No results")
+            userListSearchView.initListView(userList)
+        } else {
+            userListSearchView.initResultState("")
+            userListSearchView.initListView(userList)
+        }
+    }
+
+    override fun saveUserToDatabase(user: User, database: UserRoomDatabase) {
+        this.database = database
+        saveDetailedUserInfoToDatabase(user.userName)
     }
 
     private fun saveDetailedUserInfoToDatabase(userId: String) {
@@ -92,13 +98,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
         })
     }
 
-    fun checkListSizeAndInit(userList: MutableList<User>) {
-        if (userList.size == 0) {
-            userListSearchView.initResultState("No results")
-            userListSearchView.initListView(userList)
-        } else {
-            userListSearchView.initResultState("")
-            userListSearchView.initListView(userList)
-        }
+    override fun start() {
+
     }
 }

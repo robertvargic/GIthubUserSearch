@@ -31,16 +31,6 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
         userDetailPresenter = presenter
     }
 
-    override fun initUserInfo(user: User) {
-        userNameTextField.text = user.userName
-    }
-
-    override fun initRepoInfo(repoList: List<Repository>) {
-        val repositoryListAdapter = RepositoryListAdapter(repoList, this)
-        recycleView.adapter = repositoryListAdapter
-        recycleView.adapter.notifyDataSetChanged()
-    }
-
     private fun checkIntent() {
 
         val intent = intent
@@ -49,7 +39,7 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
             favouriteButton.visibility = View.VISIBLE
             favouriteButton.setOnClickListener({
                 userDetailPresenter.saveUserToDatabase(database)
-                println(Toast.makeText(this, "User favourited", Toast.LENGTH_LONG).show())
+                Toast.makeText(this, getString(R.string.user_favourited_user_detail), Toast.LENGTH_LONG).show()
             })
             userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(Constants.USERNAME))
         }
@@ -57,5 +47,15 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
         if (intent.getStringExtra(Constants.DATABASE_USERNAME) != null) {
             userDetailPresenter.loadUserDetailsFromDatabase(intent.getStringExtra(Constants.DATABASE_USERNAME), database)
         }
+    }
+
+    override fun initUserInfo(user: User) {
+        userNameTextField.text = user.userName
+    }
+
+    override fun initRepoInfo(repoList: List<Repository>) {
+        val repositoryListAdapter = RepositoryListAdapter(repoList, this)
+        recycleView.adapter = repositoryListAdapter
+        recycleView.adapter.notifyDataSetChanged()
     }
 }

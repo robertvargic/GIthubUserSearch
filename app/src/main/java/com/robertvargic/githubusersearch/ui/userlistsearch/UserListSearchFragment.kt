@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +21,6 @@ import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.Constants
 import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
-
-
 class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
     var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
@@ -34,6 +31,10 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
         setPresenter(UserListSearchPresenter(this))
     }
 
+    override fun setPresenter(presenter: UserListSearchContract.Presenter) {
+        userListSearchPresenter = presenter
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_user_list_search, container, false)
     }
@@ -41,37 +42,36 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        init()
-        initResultState("Enter name you want to search and press search button")
-
+        initListeners()
+        initResultState(getString(R.string.result_state_start_search))
     }
 
-    override fun saveFavouriteUser(user: User) {
-        println(Toast.makeText(context, "User favourited", Toast.LENGTH_LONG).show())
-        userListSearchPresenter.saveUserToDatabase(user, database)
-    }
-
-    override fun initResultState(message: String) {
-        if (message == "") {
-            listStateTextView.visibility = View.GONE
-        } else {
-            listStateTextView.visibility = View.VISIBLE
-            listStateTextView.text = message
+    private fun initListeners() {
+        searchButton.setOnClickListener {
+            if (isNetworkConnected()) {
+                userListSearchPresenter.searchForUser(searchEditText.text.toString())
+            } else {
+                Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+            }
         }
-    }
 
-    override fun showProgress() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    override fun hideProgress() {
-        progressBar.visibility = View.GONE
+        searchEditText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (isNetworkConnected()) {
+                    userListSearchPresenter.searchForUser(searchEditText.text.toString())
+                } else {
+                    Toast.makeText(context, getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+                }
+                return@OnEditorActionListener true
+            }
+            false
+        })
     }
 
     override fun initListView(userList: MutableList<User>) {
         val listener = object : OnUserListItemClickListener {
             override fun onClick(userName: String) {
-                var intent = Intent()
+                val intent = Intent()
                 intent.setClass(context, UserDetailActivity::class.java)
                 intent.putExtra(Constants.USERNAME, userName)
                 startActivity(intent)
@@ -84,38 +84,28 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
         val currencyListAdapter = UserListAdapter(userList, context, listener)
         recycleView.adapter = currencyListAdapter
         recycleView.adapter.notifyDataSetChanged()
-
-//        var itemTouchHelper = ItemTouchHelper(SwipeController())
-//        itemTouchHelper.attachToRecyclerView(recycleView)
-
     }
 
-    override fun setPresenter(presenter: UserListSearchContract.Presenter) {
-        userListSearchPresenter = presenter
-    }
-
-    fun init() {
-        searchButton.setOnClickListener {
-            if (isNetworkConnected()) {
-                userListSearchPresenter.searchForUser(searchEditText.text.toString())
-            } else {
-                println(Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show())
-            }
+    override fun initResultState(message: String) {
+        if (message == "") {
+            listStateTextView.visibility = View.GONE
+        } else {
+            listStateTextView.visibility = View.VISIBLE
+            listStateTextView.text = message
         }
+    }
 
-        searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent): Boolean {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (isNetworkConnected()) {
-                        userListSearchPresenter.searchForUser(searchEditText.text.toString())
-                    } else {
-                        println(Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show())
-                    }
-                    return true
-                }
-                return false
-            }
-        })
+    override fun saveFavouriteUser(user: User) {
+        Toast.makeText(context, getString(R.string.user_favourited), Toast.LENGTH_LONG).show()
+        userListSearchPresenter.saveUserToDatabase(user, database)
+    }
+
+    override fun showProgress() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        progressBar.visibility = View.GONE
     }
 
     private fun isNetworkConnected(): Boolean {
