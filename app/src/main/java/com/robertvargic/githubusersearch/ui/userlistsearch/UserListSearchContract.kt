@@ -1,7 +1,7 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.User
 import com.robertvargic.githubusersearch.ui.base.BasePresenter
 import com.robertvargic.githubusersearch.ui.base.BaseView
 

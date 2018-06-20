@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.User
 import kotlinx.android.synthetic.main.list_item_favourite_user.view.*
 
 class FavouriteUserAdapter(private val items: MutableList<User>, private val context: Context?, private val onSearchUserClickListener: OnUserListItemClickListener?) :

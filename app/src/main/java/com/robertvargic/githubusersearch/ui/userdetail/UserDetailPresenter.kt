@@ -3,8 +3,10 @@ package com.robertvargic.githubusersearch.ui.userdetail
 import android.util.Log
 import com.robertvargic.githubusersearch.database.UserDao
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.data.response.UserResponse
+import com.robertvargic.githubusersearch.data.response.mapToUserModel
 import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
@@ -21,12 +23,12 @@ class UserDetailPresenter(private val userListSearchView: UserDetailContract.Vie
 
         val getUserTask = GetUserTask(RetrofitUtil.createRetrofit(), userId)
 
-        getUserTask.execute(object : TaskListener<User> {
+        getUserTask.execute(object : TaskListener<UserResponse> {
             override fun onPreExecute() {
             }
 
-            override fun onSucess(result: User) {
-                user = result
+            override fun onSucess(userResponse: UserResponse) {
+                user = userResponse.mapToUserModel()
                 userListSearchView.initUserInfo(user)
                 loadUserRepos(user.userName)
             }

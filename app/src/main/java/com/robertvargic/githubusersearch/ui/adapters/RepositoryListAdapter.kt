@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
-import com.robertvargic.githubusersearch.model.Repository
+import com.robertvargic.githubusersearch.data.model.Repository
 import kotlinx.android.synthetic.main.list_item_repository.view.*
 
 class RepositoryListAdapter(private val items: List<Repository>, private val context: Context?) :

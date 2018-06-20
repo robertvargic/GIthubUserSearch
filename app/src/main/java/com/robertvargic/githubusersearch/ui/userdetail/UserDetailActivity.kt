@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.Toast
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.model.User
 import com.robertvargic.githubusersearch.ui.adapters.RepositoryListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseActivity
 import com.robertvargic.githubusersearch.util.DATABASE_USERNAME

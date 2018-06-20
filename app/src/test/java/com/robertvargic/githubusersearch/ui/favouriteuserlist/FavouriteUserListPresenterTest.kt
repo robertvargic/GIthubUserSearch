@@ -1,6 +1,6 @@
 package com.robertvargic.githubusersearch.ui.favouriteuserlist
 
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.User
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

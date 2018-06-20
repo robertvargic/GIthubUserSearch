@@ -4,8 +4,8 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.model.User
 
 @Dao
 interface UserDao {

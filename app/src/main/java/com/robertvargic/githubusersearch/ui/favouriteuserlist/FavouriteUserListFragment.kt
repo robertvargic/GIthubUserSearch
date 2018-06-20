@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.User
 import com.robertvargic.githubusersearch.ui.adapters.FavouriteUserAdapter
 import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.base.BaseFragment

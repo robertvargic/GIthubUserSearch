@@ -12,8 +12,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import com.robertvargic.githubusersearch.R
+import com.robertvargic.githubusersearch.data.model.User
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.adapters.UserListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseFragment

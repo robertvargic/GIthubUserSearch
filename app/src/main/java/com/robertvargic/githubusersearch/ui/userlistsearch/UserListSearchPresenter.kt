@@ -2,9 +2,11 @@ package com.robertvargic.githubusersearch.ui.userlistsearch
 
 import android.util.Log
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
-import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.response.SearchResponse
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.data.response.SearchResponse
+import com.robertvargic.githubusersearch.data.response.UserResponse
+import com.robertvargic.githubusersearch.data.response.mapToUserModel
 import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
@@ -29,7 +31,12 @@ class UserListSearchPresenter(private val userListSearchView: UserListSearchCont
 
             override fun onSucess(result: SearchResponse) {
                 userListSearchView.hideProgress()
-                checkListSizeAndInit(result.items)
+                var mutableList: MutableList<User> = ArrayList()
+                for (user in result.items) {
+                    mutableList.add(user.mapToUserModel())
+
+                }
+                checkListSizeAndInit(mutableList)
             }
 
             override fun onError(error: Throwable) {
@@ -56,14 +63,14 @@ class UserListSearchPresenter(private val userListSearchView: UserListSearchCont
     private fun saveDetailedUserInfoToDatabase(userId: String) {
         val getUserTask = GetUserTask(RetrofitUtil.createRetrofit(), userId)
 
-        getUserTask.execute(object : TaskListener<User> {
+        getUserTask.execute(object : TaskListener<UserResponse> {
             override fun onPreExecute() {
 
             }
 
-            override fun onSucess(result: User) {
-                async { database.userDao().insert(result) }
-                saveUserReposToDatabase(result)
+            override fun onSucess(result: UserResponse) {
+                async { database.userDao().insert(result.mapToUserModel()) }
+                saveUserReposToDatabase(result.mapToUserModel())
             }
 
             override fun onError(error: Throwable) {

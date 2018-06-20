@@ -1,7 +1,7 @@
 package com.robertvargic.githubusersearch.networking.tasks
 
 import android.util.Log
-import com.robertvargic.githubusersearch.model.Repository
+import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.networking.base.BaseTask
 import com.robertvargic.githubusersearch.networking.base.ServerTask
 import com.robertvargic.githubusersearch.networking.base.TaskListener

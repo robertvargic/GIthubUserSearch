@@ -1,7 +1,7 @@
 package com.robertvargic.githubusersearch.ui.userdetail
 
-import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.User
+import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.model.User
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import org.junit.Before
