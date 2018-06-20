@@ -1,12 +1,10 @@
 package com.robertvargic.githubusersearch.ui.userlistsearch
 
 import android.util.Log
-import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.data.model.User
-import com.robertvargic.githubusersearch.data.response.SearchResponse
-import com.robertvargic.githubusersearch.data.response.UserResponse
-import com.robertvargic.githubusersearch.data.response.mapToUserModel
+import com.robertvargic.githubusersearch.data.response.*
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
@@ -31,7 +29,7 @@ class UserListSearchPresenter(private val userListSearchView: UserListSearchCont
 
             override fun onSucess(result: SearchResponse) {
                 userListSearchView.hideProgress()
-                var mutableList: MutableList<User> = ArrayList()
+                val mutableList: MutableList<User> = ArrayList()
                 for (user in result.items) {
                     mutableList.add(user.mapToUserModel())
 
@@ -83,17 +81,19 @@ class UserListSearchPresenter(private val userListSearchView: UserListSearchCont
     private fun saveUserReposToDatabase(user: User) {
         val getUserReposTask = GetUserReposTask(RetrofitUtil.createRetrofit(), user.userName)
 
-        getUserReposTask.execute(object : TaskListener<ArrayList<Repository>> {
+        getUserReposTask.execute(object : TaskListener<ArrayList<RepositoryResponse>> {
             override fun onPreExecute() {
 
             }
 
-            override fun onSucess(result: ArrayList<Repository>) {
+            override fun onSucess(result: ArrayList<RepositoryResponse>) {
+                val mutableRepoList: MutableList<Repository> = ArrayList()
                 for (repository in result) {
                     repository.userId = user.id
+                    mutableRepoList.add(repository.mapToRepositoryModel())
                 }
 
-                async { database.userDao().insert(result) }
+                async { database.userDao().insert(mutableRepoList) }
             }
 
             override fun onError(error: Throwable) {

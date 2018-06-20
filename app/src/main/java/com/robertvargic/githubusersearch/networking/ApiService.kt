@@ -1,6 +1,6 @@
 package com.robertvargic.githubusersearch.networking
 
-import com.robertvargic.githubusersearch.data.model.Repository
+import com.robertvargic.githubusersearch.data.response.RepositoryResponse
 import com.robertvargic.githubusersearch.data.response.SearchResponse
 import com.robertvargic.githubusersearch.data.response.UserResponse
 import retrofit2.Call
@@ -17,5 +17,5 @@ interface ApiService {
     fun getUser(@Path("user") username: String): Call<UserResponse>
 
     @GET("/users/{user}/repos")
-    fun getUserRepos(@Path("user")username: String): Call<ArrayList<Repository>>
+    fun getUserRepos(@Path("user")username: String): Call<ArrayList<RepositoryResponse>>
 }

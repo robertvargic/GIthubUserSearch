@@ -1,12 +1,14 @@
 package com.robertvargic.githubusersearch.ui.userdetail
 
 import android.util.Log
-import com.robertvargic.githubusersearch.database.UserDao
-import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.data.response.RepositoryResponse
 import com.robertvargic.githubusersearch.data.response.UserResponse
+import com.robertvargic.githubusersearch.data.response.mapToRepositoryModel
 import com.robertvargic.githubusersearch.data.response.mapToUserModel
+import com.robertvargic.githubusersearch.database.UserDao
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.networking.RetrofitUtil
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
@@ -61,13 +63,17 @@ class UserDetailPresenter(private val userListSearchView: UserDetailContract.Vie
     private fun loadUserRepos(userId: String) {
         val getUserReposTask = GetUserReposTask(RetrofitUtil.createRetrofit(), userId)
 
-        getUserReposTask.execute(object : TaskListener<ArrayList<Repository>> {
+        getUserReposTask.execute(object : TaskListener<ArrayList<RepositoryResponse>> {
             override fun onPreExecute() {
 
             }
 
-            override fun onSucess(result: ArrayList<Repository>) {
-                userRepoList = result
+            override fun onSucess(result: ArrayList<RepositoryResponse>) {
+                userRepoList = ArrayList()
+                for (repository in result) {
+                    repository.userId = userId
+                    userRepoList.add(repository.mapToRepositoryModel())
+                }
                 userListSearchView.initRepoInfo(userRepoList)
             }
 
