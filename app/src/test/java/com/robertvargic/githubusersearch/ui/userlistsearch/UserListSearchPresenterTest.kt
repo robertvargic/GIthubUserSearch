@@ -75,31 +75,39 @@ class UserListSearchPresenterTest {
 
     @Test
     fun `init result state`() {
-        verify(viewContract).initResultState("some string")
-//        verifyNoMoreInteractions(viewContract)
+        val someString = "some string"
+        viewContract.initResultState(someString)
+        verify(viewContract).initResultState(someString)
+        verifyNoMoreInteractions(viewContract)
     }
 
     @Test
     fun `init result state empty`() {
-        verify(viewContract).initResultState("")
+        val emptyString = ""
+        viewContract.initResultState(emptyString)
+        verify(viewContract).initResultState(emptyString)
+        verifyNoMoreInteractions(viewContract)
     }
 
     @Test
     fun `show progress`() {
+        viewContract.showProgress()
         verify(viewContract).showProgress()
-        verify(viewContract, Mockito.atLeastOnce())
+        verifyNoMoreInteractions(viewContract)
     }
 
     @Test
     fun `hide progress`() {
+        viewContract.hideProgress()
         verify(viewContract).hideProgress()
-        verify(viewContract, Mockito.atLeastOnce())
+        verifyNoMoreInteractions(viewContract)
     }
 
     @Test
     fun `init list view`() {
+        viewContract.initListView(userList)
         verify(viewContract).initListView(userList)
-        verify(viewContract, Mockito.atLeastOnce()).hideProgress()
+        verify(viewContract).hideProgress()
         verifyNoMoreInteractions(viewContract)
     }
 
