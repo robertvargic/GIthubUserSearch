@@ -2,7 +2,7 @@ package com.robertvargic.githubusersearch
 
 import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.SearchResponse
+import com.robertvargic.githubusersearch.model.response.SearchResponse
 import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask

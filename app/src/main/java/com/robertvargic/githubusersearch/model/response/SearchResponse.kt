@@ -1,4 +1,5 @@
-package com.robertvargic.githubusersearch.model
+package com.robertvargic.githubusersearch.model.response
+import com.robertvargic.githubusersearch.model.User
 import com.robertvargic.githubusersearch.util.Json
 
 data class SearchResponse(@Json("total_count") val totalCount: Int,

@@ -1,7 +1,7 @@
 package com.robertvargic.githubusersearch.networking
 
 import com.robertvargic.githubusersearch.model.Repository
-import com.robertvargic.githubusersearch.model.SearchResponse
+import com.robertvargic.githubusersearch.model.response.SearchResponse
 import com.robertvargic.githubusersearch.model.User
 import retrofit2.Call
 import retrofit2.http.GET
