@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_delete_database.*
 
 class DeleteDatabaseFragment : BaseFragment(), DeleteDatabaseContract.View {
 
-    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
+    val database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
 
     private lateinit var deleteDatabasePresenter: DeleteDatabaseContract.Presenter
 

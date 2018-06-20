@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_favourite_user_list.*
 
 class FavouriteUserListFragment : BaseFragment(), FavouriteUserListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-
     private lateinit var favouriteUserListPresenter: FavouriteUserListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

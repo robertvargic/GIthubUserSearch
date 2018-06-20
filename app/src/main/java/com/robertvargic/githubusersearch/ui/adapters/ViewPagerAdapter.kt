@@ -26,5 +26,4 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAda
     override fun getPageTitle(position: Int): CharSequence {
         return titles[position]
     }
-
 }

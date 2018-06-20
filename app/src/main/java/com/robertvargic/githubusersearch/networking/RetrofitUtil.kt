@@ -11,7 +11,7 @@ class RetrofitUtil {
 
     companion object {
 
-        val BASE_URL = "https://api.github.com/"
+        private const val BASE_URL = "https://api.github.com/"
         var retrofit: Retrofit? = null
 
         private val DATE_JSON_SERIALIZER = JsonSerializer<Date> { src, typeOfSrc, context -> if (src == null) null else JsonPrimitive(src.time) }

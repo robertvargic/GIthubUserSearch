@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_user_detail.*
 class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
     private lateinit var userDetailPresenter: UserDetailContract.Presenter
-    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(this)!!
+    val database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(this)!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_user_list_search.*
 
 class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
 
-    var database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
+    val database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(context)!!
     private lateinit var userListSearchPresenter: UserListSearchContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

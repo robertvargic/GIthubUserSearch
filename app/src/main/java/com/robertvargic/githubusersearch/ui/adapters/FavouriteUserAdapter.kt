@@ -28,7 +28,7 @@ class FavouriteUserAdapter(private val items: MutableList<User>, private val con
         fun bindData(user: User) {
             itemView.userName.text = user.userName
             itemView.numberOfRepos.text = user.numberOfPublicRepos
-            itemView.setOnClickListener({ view -> listener!!.onClick(user.id) })
+            itemView.setOnClickListener { listener!!.onClick(user.id) }
         }
     }
 }

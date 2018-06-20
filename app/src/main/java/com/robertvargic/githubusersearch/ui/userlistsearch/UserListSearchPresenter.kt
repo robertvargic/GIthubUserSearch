@@ -13,7 +13,7 @@ import com.robertvargic.githubusersearch.networking.tasks.SearchForUserTask
 import kotlinx.coroutines.experimental.async
 
 
-class UserListSearchPresenter(private var userListSearchView: UserListSearchContract.View) : UserListSearchContract.Presenter {
+class UserListSearchPresenter(private val userListSearchView: UserListSearchContract.View) : UserListSearchContract.Presenter {
 
     lateinit var database: UserRoomDatabase
 
@@ -62,7 +62,7 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
 
             override fun onSucess(result: User) {
-                async {database.userDao().insert(result)}
+                async { database.userDao().insert(result) }
                 saveUserReposToDatabase(result)
             }
 
@@ -82,13 +82,11 @@ class UserListSearchPresenter(private var userListSearchView: UserListSearchCont
             }
 
             override fun onSucess(result: ArrayList<Repository>) {
-                var repositoriesResult = result
-
-                for (repository in repositoriesResult) {
+                for (repository in result) {
                     repository.userId = user.id
                 }
 
-                async {database.userDao().insert(repositoriesResult)}
+                async { database.userDao().insert(result) }
             }
 
             override fun onError(error: Throwable) {

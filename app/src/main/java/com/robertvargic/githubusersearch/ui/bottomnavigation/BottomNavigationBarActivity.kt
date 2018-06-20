@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.activity_bottom_navigation_bar.*
 
 class BottomNavigationBarActivity : BaseActivity() {
 
-    var searchFragment = UserListSearchFragment()
-    var favouriteFragment = FavouriteUserListFragment()
-    var deleteFragment = DeleteDatabaseFragment()
+    private val searchFragment = UserListSearchFragment()
+    private val favouriteFragment = FavouriteUserListFragment()
+    private val deleteFragment = DeleteDatabaseFragment()
     var prevMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class BottomNavigationBarActivity : BaseActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        var viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         viewPagerAdapter.addFragment(searchFragment, SEARCH_USER_FRAGMENT)
         viewPagerAdapter.addFragment(favouriteFragment, FAVOURITE_USERS_FRAGMENT)
         viewPagerAdapter.addFragment(deleteFragment, DELETE_DATABASE_FRAGMENT)
@@ -59,7 +59,7 @@ class BottomNavigationBarActivity : BaseActivity() {
         false
     }
 
-    private val onPageChangeListener = object: ViewPager.OnPageChangeListener {
+    private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {
         }
 
