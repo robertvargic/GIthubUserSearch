@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search"
         android:title="@string/title_search" />
 
     <item
         android:id="@+id/navigation_favourites"
+        android:icon="@drawable/ic_favourite"
         android:title="@string/title_favourites" />
 
     <item
         android:id="@+id/navigation_delete"
+        android:icon="@drawable/ic_delete"
         android:title="@string/title_delete_database" />
 
 </menu>
