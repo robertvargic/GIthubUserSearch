@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.robertvargic.githubusersearch.R
-import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.ui.adapters.FavouriteUserAdapter
-import com.robertvargic.githubusersearch.ui.adapters.OnUserListItemClickListener
 import com.robertvargic.githubusersearch.ui.base.BaseFragment
 import com.robertvargic.githubusersearch.ui.userdetail.UserDetailActivity
 import com.robertvargic.githubusersearch.util.DATABASE_USERNAME
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_favourite_user_list.*
 class FavouriteUserListFragment : BaseFragment(), FavouriteUserListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var favouriteUserListPresenter: FavouriteUserListContract.Presenter
+    private val currencyListAdapter by lazy { FavouriteUserAdapter({ onUserClick(it) }) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,26 +38,18 @@ class FavouriteUserListFragment : BaseFragment(), FavouriteUserListContract.View
         super.onViewCreated(view, savedInstanceState)
         swipeRefresh.setOnRefreshListener(this)
         recycleView.layoutManager = LinearLayoutManager(context)
+        recycleView.adapter = currencyListAdapter
+
         favouriteUserListPresenter.getUsersFromDatabase(UserRoomDatabase.getDatabaseInstance(context))
     }
 
-    override fun initListView(userList: MutableList<User>) {
-        val listener = object : OnUserListItemClickListener {
-            override fun onClick(userId: String) {
-                val intent = Intent()
-                intent.setClass(context, UserDetailActivity::class.java)
-                intent.putExtra(DATABASE_USERNAME, userId)
-                startActivity(intent)
-            }
+    override fun initListView(userList: MutableList<User>) = currencyListAdapter.setData(userList)
 
-            override fun onFavouriteClick(user: User) {
-                //nothing
-            }
-        }
-
-        val currencyListAdapter = FavouriteUserAdapter(userList, context, listener)
-        recycleView.adapter = currencyListAdapter
-        recycleView.adapter.notifyDataSetChanged()
+    private fun onUserClick(username: String) {
+        val intent = Intent()
+        intent.setClass(context, UserDetailActivity::class.java)
+        intent.putExtra(DATABASE_USERNAME, username)
+        startActivity(intent)
     }
 
     override fun initEmptyState(visible: Boolean) {

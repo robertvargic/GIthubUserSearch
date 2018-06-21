@@ -43,14 +43,13 @@ class UserListSearchPresenter(private val userListSearchView: UserListSearchCont
         })
     }
 
-    fun checkListSizeAndInit(userList: MutableList<User>) {
-        if (userList.size == 0) {
+    fun checkListSizeAndInit(userList: List<User>) {
+        if (userList.isEmpty()) {
             userListSearchView.initResultState("No results")
-            userListSearchView.initListView(userList)
         } else {
             userListSearchView.initResultState("")
-            userListSearchView.initListView(userList)
         }
+        userListSearchView.initListView(userList)
     }
 
     override fun saveUserToDatabase(user: User, database: UserRoomDatabase) {

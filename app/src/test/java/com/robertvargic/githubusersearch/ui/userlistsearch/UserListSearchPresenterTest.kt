@@ -1,9 +1,9 @@
 package com.robertvargic.githubusersearch
 
-import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.data.model.Repository
-import com.robertvargic.githubusersearch.data.response.SearchResponse
 import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.data.response.SearchResponse
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import com.robertvargic.githubusersearch.networking.tasks.GetUserTask
@@ -17,7 +17,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-
 
 
 class UserListSearchPresenterTest {
@@ -39,9 +38,6 @@ class UserListSearchPresenterTest {
     lateinit var listener: TaskListener<SearchResponse>
 
     @Mock
-    lateinit var userList: MutableList<User>
-
-    @Mock
     lateinit var userDetailListener: TaskListener<User>
 
     @Mock
@@ -52,7 +48,7 @@ class UserListSearchPresenterTest {
 
     @Mock
     lateinit var database: UserRoomDatabase
-    
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -104,10 +100,23 @@ class UserListSearchPresenterTest {
     }
 
     @Test
-    fun `init list view`() {
-        viewContract.initListView(userList)
+    fun `init list view empty`() {
+        val userList = arrayListOf<User>()
+
+        presenter.checkListSizeAndInit(userList)
         verify(viewContract).initListView(userList)
-        verify(viewContract).hideProgress()
+        verify(viewContract).initResultState("No results")
+        verifyNoMoreInteractions(viewContract)
+    }
+
+    @Test
+    fun `init list view not empty`() {
+        val userList = arrayListOf<User>()
+        userList.add(User("123", "misko", null, null, null, null, null))
+
+        presenter.checkListSizeAndInit(userList)
+        verify(viewContract).initListView(userList)
+        verify(viewContract).initResultState("")
         verifyNoMoreInteractions(viewContract)
     }
 

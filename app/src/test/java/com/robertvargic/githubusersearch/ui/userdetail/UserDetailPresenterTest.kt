@@ -2,6 +2,7 @@ package com.robertvargic.githubusersearch.ui.userdetail
 
 import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.data.response.RepositoryResponse
 import com.robertvargic.githubusersearch.networking.base.TaskListener
 import com.robertvargic.githubusersearch.networking.tasks.GetUserReposTask
 import org.junit.Before
@@ -22,7 +23,7 @@ class UserDetailPresenterTest {
     lateinit var getUserReposTask: GetUserReposTask
 
     @Mock
-    lateinit var listener: TaskListener<ArrayList<Repository>>
+    lateinit var listener: TaskListener<ArrayList<RepositoryResponse>>
 
     @Mock
     lateinit var user: User

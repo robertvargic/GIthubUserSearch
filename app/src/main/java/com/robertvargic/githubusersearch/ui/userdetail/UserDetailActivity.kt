@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.data.model.User
@@ -51,6 +52,9 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
     override fun initUserInfo(user: User) {
         userNameTextField.text = user.userName
+        Glide.with(this)
+                .load(user.avatarUrl)
+                .into(userImageView)
     }
 
     override fun initRepoInfo(repoList: List<Repository>) {

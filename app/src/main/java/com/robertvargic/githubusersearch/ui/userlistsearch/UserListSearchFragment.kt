@@ -68,7 +68,7 @@ class UserListSearchFragment : BaseFragment(), UserListSearchContract.View {
         })
     }
 
-    override fun initListView(userList: MutableList<User>) {
+    override fun initListView(userList: List<User>) {
         val listener = object : OnUserListItemClickListener {
             override fun onClick(userName: String) {
                 val intent = Intent()

@@ -9,7 +9,7 @@ import com.robertvargic.githubusersearch.R
 import com.robertvargic.githubusersearch.data.model.User
 import kotlinx.android.synthetic.main.list_item_user.view.*
 
-class UserListAdapter(private val items: MutableList<User>, private val context: Context?, private val onSearchUserClickListener: OnUserListItemClickListener?) :
+class UserListAdapter(private val items: List<User>, private val context: Context?, private val onSearchUserClickListener: OnUserListItemClickListener?) :
         RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

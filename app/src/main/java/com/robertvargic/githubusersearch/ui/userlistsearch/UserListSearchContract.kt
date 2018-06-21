@@ -11,7 +11,7 @@ interface UserListSearchContract {
         fun initResultState(message: String)
         fun showProgress()
         fun hideProgress()
-        fun initListView(userList: MutableList<User>)
+        fun initListView(userList: List<User>)
         fun saveFavouriteUser(user: User)
     }
 
