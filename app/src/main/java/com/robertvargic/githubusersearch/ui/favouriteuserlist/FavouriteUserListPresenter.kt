@@ -13,11 +13,11 @@ class FavouriteUserListPresenter(private var favouriteUserView: FavouriteUserLis
         async {
             val userList = userDao.getAllUsers()
             if (userList.size == 0) {
+                favouriteUserView.initListView(userList)
                 favouriteUserView.initEmptyState(true)
-                favouriteUserView.initListView(userList)
             } else {
-                favouriteUserView.initEmptyState(false)
                 favouriteUserView.initListView(userList)
+                favouriteUserView.initEmptyState(false)
             }
         }
     }
