@@ -5,9 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.robertvargic.githubusersearch.R
-import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.data.model.Repository
 import com.robertvargic.githubusersearch.data.model.User
+import com.robertvargic.githubusersearch.database.UserRoomDatabase
 import com.robertvargic.githubusersearch.ui.adapters.RepositoryListAdapter
 import com.robertvargic.githubusersearch.ui.base.BaseActivity
 import com.robertvargic.githubusersearch.util.DATABASE_USERNAME
@@ -18,7 +18,6 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
     private lateinit var userDetailPresenter: UserDetailContract.Presenter
     val database: UserRoomDatabase = UserRoomDatabase.getDatabaseInstance(this)!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +37,10 @@ class UserDetailActivity : BaseActivity(), UserDetailContract.View {
 
         if (intent.getStringExtra(USERNAME) != null) {
             favouriteButton.visibility = View.VISIBLE
-            favouriteButton.setOnClickListener({
+            favouriteButton.setOnClickListener {
                 userDetailPresenter.saveUserToDatabase(database)
                 Toast.makeText(this, getString(R.string.user_favourited_user_detail), Toast.LENGTH_LONG).show()
-            })
+            }
             userDetailPresenter.loadUserDetailsFromWeb(intent.getStringExtra(USERNAME))
         }
 
